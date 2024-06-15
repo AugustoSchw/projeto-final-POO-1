@@ -22,12 +22,12 @@ class Fogo(Pokemon):
             super().ataque_novo(nivel)
         elif (nivel ==11) and (chance>=50):
             print(f'Seu pokemon aprendeu o ataque "Lança-chamas" do tipo de fogo')
-            self.ataques['(F)Lança-chamas'] = math.ceil(self.nivel*25)
+            self.ataques['(F)Lança-chamas'] = math.ceil(self.nivel*35)
         elif (nivel == 11) and (chance<50):
             super().ataque_novo(nivel)
         elif (nivel ==15) and (chance>=50):
             print(f'Seu pokemon aprendeu o ataque "Erupção" do tipo de fogo')
-            self.ataques['(F)Erupção'] = math.ceil(self.nivel*30)
+            self.ataques['(F)Erupção'] = math.ceil(self.nivel*57)
         elif (nivel == 15) and (chance<50):
             super().ataque_novo(nivel)
         
@@ -53,17 +53,17 @@ class Planta(Pokemon):
         chance = randint(1,100)
         if nivel == 7 and chance >= 50:
             print(f'Seu pokemon aprendeu o ataque "Esporos" do tipo de planta!')
-            self.ataques['(P)Esporos'] = math.ceil(self.nivel*6)
+            self.ataques['(P)Esporos'] = math.ceil(self.nivel*16)
         elif (nivel == 7) and (chance<50):
             super().ataque_novo(nivel)
         elif nivel == 11 and chance >= 50:
             print(f'Seu pokemon aprendeu o ataque "Lâmina de folhas" do tipo de planta!')
-            self.ataques['(P)Lâmina de folhas'] = math.ceil(self.nivel*6)
+            self.ataques['(P)Lâmina de folhas'] = math.ceil(self.nivel*26)
         elif (nivel == 11) and (chance<50):
             super().ataque_novo(nivel)
         elif nivel == 15 and chance >= 50:
             print(f'Seu pokemon aprendeu o ataque "Chicote de folhas" do tipo de planta!')
-            self.ataques['(P)Chicote de folhas'] = math.ceil(self.nivel*7)
+            self.ataques['(P)Chicote de folhas'] = math.ceil(self.nivel*37)
         elif (nivel == 15) and (chance<50):
             super().ataque_novo(nivel)
     
@@ -91,17 +91,17 @@ class Agua(Pokemon):
         chance = randint(1,100)
         if nivel == 7 and chance >= 50:
             print(f'Seu pokemon aprendeu o ataque "Jato dágua" do tipo de água!')
-            self.ataques['(A)Jato dagua'] = math.ceil(self.nivel*6)
+            self.ataques['(A)Jato dagua'] = math.ceil(self.nivel*26)
         elif (nivel == 7) and (chance<50):
             super().ataque_novo(nivel)
         elif nivel == 11 and chance >= 50:
             print(f'Seu pokemon aprendeu o ataque "Lâmina de água" do tipo de água!')
-            self.ataques['(A)Lâmina de água'] = math.ceil(self.nivel*6)
+            self.ataques['(A)Lâmina de água'] = math.ceil(self.nivel*36)
         elif (nivel == 11) and (chance<50):
             super().ataque_novo(nivel)
         elif nivel == 15 and chance >= 50:
             print(f'Seu pokemon aprendeu o ataque "Chicote de água" do tipo de água!') #hidrobomb em ingles
-            self.ataques['(A)Chicote de água'] = math.ceil(self.nivel*7)
+            self.ataques['(A)Chicote de água'] = math.ceil(self.nivel*47)
         elif (nivel == 15) and (chance<50):
             super().ataque_novo(nivel)
 

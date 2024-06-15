@@ -1,4 +1,5 @@
 from pokemon import Pokemon, Jogador
+import time
 from pokemon_tipos import Fogo, Planta, Agua
 from random import randint
 import math
@@ -101,7 +102,9 @@ pokedex={'charmander': "fogo", 'squirtle': "agua", 'bulbassauro': "planta", "zap
 player=Jogador()
 escolha=input("Escolha o seu pokemon: \n1)Charmander\n2)Squirtle\n3)Bulbassauro\n: ")
 escolha = tentar_int(escolha)
-
+while (escolha < 1) or (escolha > 3):
+    escolha=input("Escolha o seu pokemon: \n1)Charmander\n2)Squirtle\n3)Bulbassauro\n: ")
+    escolha = tentar_int(escolha)
 if escolha == 1:
     meu_pokemon=Fogo("charmander")
 elif escolha == 2:
@@ -116,23 +119,24 @@ meu_pokemon.escolha_nome()
 treinador_1_derrotado=False
 aparicao_treinador_1 = False
 treinador_1_pokemons=[]
+mensagem_treinador=0
 while True:
     if media_niveis(meuspokemons) >= 3 and (treinador_1_derrotado==False):
-        if aparicao_treinador_1 == False:
+        if mensagem_treinador==0:
             print("Um treinador pokemon apareceu na cidade! Se quiser lutar contra ele, escolha a opção correspondente")
+            mensagem_treinador=1
             caminho=input(f'Escolha entre ir ao mercado para comprar suprimentos ou batalhar(mercado/batalhar/pokecenter/PC/treinador/meus pokemons): ')
-            while (caminho!="mercado") and (caminho!="batalhar") and (caminho!="pokecenter") and (caminho!="PC") and (caminho!="treinador" and (caminho!="meus pokemons")):
+            while (caminho!="mercado") and (caminho!="batalhar") and (caminho!="pokecenter") and (caminho!="PC") and (caminho!="pc") and (caminho!="treinador" and (caminho!="meus pokemons")):
                 caminho=input(f'Escolha entre ir ao mercado para comprar suprimentos ou batalhar(mercado/batalhar/pokecenter/PC/treinador/meus pokemons): ')
-            aparicao_treinador1 = True
+            
         else:
             caminho=input(f'Escolha entre ir ao mercado para comprar suprimentos ou batalhar(mercado/batalhar/pokecenter/PC/treinador/meus pokemons): ')
-            while (caminho!="mercado") and (caminho!="batalhar") and (caminho!="pokecenter") and (caminho!="PC") and (caminho!="treinador") and (caminho!="meus pokemons"):
+            while (caminho!="mercado") and (caminho!="batalhar") and (caminho!="pokecenter") and (caminho!="PC") and (caminho!="pc") and (caminho!="treinador") and (caminho!="meus pokemons"):
                 caminho=input(f'Escolha entre ir ao mercado para comprar suprimentos ou batalhar(mercado/batalhar/pokecenter/PC/treinador/meus pokemons): ')
     else:
         caminho=input(f'Escolha entre ir ao mercado para comprar suprimentos ou batalhar(mercado/batalhar/pokecenter/PC/meus pokemons): ')
-        while (caminho!="mercado") and (caminho!="batalhar") and (caminho!="pokecenter") and (caminho!="PC" and (caminho!="meus pokemons")):
+        while (caminho!="mercado") and (caminho!="batalhar") and (caminho!="pokecenter") and (caminho!="PC") and (caminho!="pc") and (caminho!="meus pokemons"):
             caminho=input(f'Escolha entre ir ao mercado para comprar suprimentos ou batalhar(mercado/batalhar/pokecenter/PC/meus pokemons): ')
-
     
         #while len(pokemons_treinador_1)>1:
          #   x = len(pokemons_treinador_1)
@@ -141,23 +145,37 @@ while True:
         if len(meuspokemons)>0:
             for i in range(len(meuspokemons)):
                 print(f'{i+1}) {meuspokemons[i].raca} de nivel {meuspokemons[i].nivel}')
-            mudanca_pokemon=input(f'Escolha o número do pokemon que você deseja alterar o nome ou retirar do seu time: ')
-            mudanca_pokemon=tentar_int(mudanca_pokemon)
-            escolha_pokemon = input(f'Escolha a funcao que deseja: \n1:Alterar Nome\n2: Libertar para a natureza')
+            mudanca_pokemon=input(f'Escolha o número do pokemon que você deseja alterar o nome ou retirar do seu time, e quaso deseje voltar a tela anterior, digite "9": ')
+            mudanca_pokemon=tentar_int(mudanca_pokemon) - 1
+            if mudanca_pokemon == 8:
+                continue
+            while mudanca_pokemon < 0 or mudanca_pokemon > len(meuspokemons) - 1:
+                mudanca_pokemon = input('Digite um número válido que corresponda a algum pokemon!')
+                mudanca_pokemon = tentar_int(mudanca_pokemon) - 1
+
+            meuspokemons[mudanca_pokemon].printar()
+            escolha_pokemon = input(f'Escolha a funcao que deseja: \n1: Alterar Nome\n2: Libertar para a natureza\n9: Voltar para a tela de inicio\n: ')
             escolha_pokemon = tentar_int(escolha_pokemon)
+            while (escolha_pokemon != 1) and (escolha_pokemon != 2) and (escolha_pokemon != 9):
+                escolha_pokemon = input(f'Escolha um número adequado: \n1: Alterar Nome\n2: Libertar para a natureza\n9: Voltar para a tela de inicio\n: ')
+                escolha_pokemon = tentar_int(escolha_pokemon)
+            if escolha_pokemon == 9:
+                continue
             if escolha_pokemon == 1:
-                meu_pokemon.escolha_nome()
+                print(f'')
+                meuspokemons[mudanca_pokemon].escolha_nome()
                 continue
             elif escolha_pokemon == 2:
                 if len(meuspokemons) == 1:
                     print("Você não pode libertar seu único pokemon")
                     continue
                 else:
-                    meuspokemons.pop(meuspokemons[mudanca_pokemon])
+                    meuspokemons.remove(meuspokemons[mudanca_pokemon])
                     continue
+
                     
     
-    if caminho == "PC":
+    if (caminho == "PC") or (caminho == "pc"):
         if len(meuspokemonsPC)>0:
             for i in range(len(meuspokemonsPC)):
                 print(f'{i+1}) {meuspokemonsPC[i].raca} de nivel {meuspokemonsPC[i].nivel}')
@@ -185,6 +203,7 @@ while True:
                     pokemon_contra = Agua(k)
                 if v == "planta":
                     pokemon_contra = Planta(k)
+        encontro_pokemon=0
     
     if caminho == "treinador":
         pokemons_treinador_1 = []
@@ -202,7 +221,7 @@ while True:
                         pokemon_contra = Planta(k)
                     for i in range(5 - pokemon_contra.nivel):
                         pokemon_contra.stats_tipo()
-                        pokemon_contra.nivel += 1
+                        pokemon_contra.nivel += 0
                     pokemons_treinador_1.append(pokemon_contra)
         pokemon_contra = pokemons_treinador_1[0]
             
@@ -211,13 +230,17 @@ while True:
                 
             
             
-              
+    aparecer_nome=0
     if caminho=="pokecenter":
         for i in range(len(meuspokemons)):
             meuspokemons[i].pokecenter()
         print('Seu pokemon foi recuperado !')
     while (pokemon_contra.vida>0) and caminho == "batalhar":
-        print(f'\nhp: {pokemon_contra.vida}\n\n{pokemon_contra.ascii}\n\n')
+        if aparecer_nome == 0:
+            print(f'\n{"-"*((len(pokemon_contra.raca))+15)}\n|Um {pokemon_contra.raca} apareceu!|')
+            aparecer_nome+=1
+        print(f'{"-"*((len(pokemon_contra.raca))+15)}')
+        print(f'{pokemon_contra.ascii}\n          Vida de {pokemon_contra.raca}: {pokemon_contra.vida}\n\n')
         print(f'--------------------------------------------\n Vida de {meu_pokemon.nome}: {meu_pokemon.vida}\n--------------------------------------------\nMoedas:{player.moedas}')
         acao=input(f'-------   -------   -------   ----------\n/ATACAR/  /FUGIR/   /ITENS/   /POKEMONS/\n-------   -------   -------   ----------\n: ')
         if acao=="itens":
@@ -231,7 +254,11 @@ while True:
                     pokebola_chance = getattr(meu_pokemon, item_escolhido) 
                     resultado_pokebola = pokebola_chance(pokemon_contra.vida,pokemon_contra.vida_max)
                     if resultado_pokebola == "S":
-                        print(f'Você capturou um {pokemon_contra.raca} de nivel {pokemon_contra.nivel}')
+                        print(f'Você joga a pokebola e...')
+                        for i in range(3):
+                            time.sleep(0.6)
+                            print('.')
+                        print(f'\nVocê capturou um {pokemon_contra.raca} de nivel {pokemon_contra.nivel}')
                         alterar_nome=input("Você deseja dar um nome ao seu novo pokemon?(S/N)").upper()
                         if alterar_nome =="S":
                             pokemon_contra.escolha_nome()
@@ -249,7 +276,12 @@ while True:
                                 meuspokemonsPC.append(pokemon_contra)
                         break
                     else:
+                        print(f'Você joga a pokebola e...')
+                        for i in range(3):
+                            time.sleep(0.6)
+                            print('.')
                         print(f'Você não conseguiu capturar o pokemon!')
+                        time.sleep(0.8)
             else:
                 print(f'Você não tem itens no seu inventário!')
                 continue
@@ -271,8 +303,8 @@ while True:
             #escolha_ataque=int(input("Selecione o número que corresponde ao ataque desejado: "))
             #escolha_ataque=escolha_ataque-1 
             dano, tipo_dano_ataque = ataque()
+            print(f'\nSeu turno:\n')
             pokemon_contra.dano(dano,meu_pokemon.vida, tipo_dano_ataque, pokemon_contra.forte, pokemon_contra.fraco) 
-            
 
         if acao == "pokemons":
             for i in range(len(meuspokemons)):
@@ -296,6 +328,7 @@ while True:
 
         print(f'\nTurno do inimigo:\n')
         meu_pokemon.dano(dano,pokemon_contra.vida,tipo_dano_ataque, meu_pokemon.forte, meu_pokemon.fraco)
+        time.sleep(1.8)
         
         if meu_pokemon.vida<=0:
             for i in range(len(meuspokemons)):
@@ -312,7 +345,9 @@ while True:
                     meuspokemons[i].pokecenter()
                 contador = 0
                 break
+        
         if pokemon_contra.vida<=0:
+            aparecer_nome=0
             meu_pokemon.ganho_xp(pokemon_contra.nivel)
             meu_pokemon.subida_nivel()
             player.moedas_vitoria(pokemon_contra.nivel)
@@ -321,7 +356,8 @@ while True:
             print(media_pokemons)
     
     while (pokemon_contra.vida>0) and (caminho == "treinador") and (len(pokemons_treinador_1) > 0):
-        print(f'\nhp:{pokemon_contra.raca}: {pokemon_contra.vida}\n\n{pokemon_contra.ascii}\n\n')
+        print(f'{"-"*((len(pokemon_contra.raca))+15)}')
+        print(f'{pokemon_contra.ascii}\n          Vida de {pokemon_contra.raca}: {pokemon_contra.vida}\n\n')
         print(f'--------------------------------------------\n Vida de {meu_pokemon.nome}: {meu_pokemon.vida}\n--------------------------------------------\nMoedas:{player.moedas}')
         acao=input(f'-------   -------   -------   ----------\n/ATACAR/  /FUGIR/   /ITENS/   /POKEMONS/\n-------   -------   -------   ----------\n: ')
         if acao=="itens":
@@ -340,7 +376,8 @@ while True:
                 
         if (acao!="fugir") and (acao!="atacar") and (acao!="itens") and (acao!="pokemons"):
             continue
-        if acao=="fugir":            
+        if acao=="fugir":             
+            
             print("Conseguiu escapar!")
             break
 
@@ -352,6 +389,7 @@ while True:
             #escolha_ataque=int(input("Selecione o número que corresponde ao ataque desejado: "))
             #escolha_ataque=escolha_ataque-1 
             dano, tipo_dano_ataque = ataque()
+            print(f'\nSeu turno:\n')
             pokemon_contra.dano(dano,meu_pokemon.vida, tipo_dano_ataque, pokemon_contra.forte, pokemon_contra.fraco) 
             
 
@@ -377,15 +415,16 @@ while True:
 
         print(f'\nTurno do inimigo:\n')
         meu_pokemon.dano(dano,pokemon_contra.vida,tipo_dano_ataque, meu_pokemon.forte, meu_pokemon.fraco)
+        time.sleep(1.4)
         
         if meu_pokemon.vida<=0:
-            for i in range(meuspokemons):
+            for i in range(len(meuspokemons)):
                 if meuspokemons[i].vida>0:
                     meuspokemons[i]=meu_pokemon
             
             contador = 0
-            for i in range(meuspokemons):
-                if meuspokemons[i].vida == 0:
+            for i in range(len(meuspokemons)):
+                if meuspokemons[i].vida <= 0:
                     contador += 1
             if contador == len(meuspokemons):
                 print(f'Infelizmente a vida de todos os pokemons chegou a 0, você será enviado ao pokecenter!')
@@ -400,12 +439,10 @@ while True:
             print(f'nivel = {meu_pokemon.nivel} // xp = {meu_pokemon.xp}')
             media_pokemons = media_niveis(meuspokemons)
             if len(pokemons_treinador_1) > 0:
-                pokemons_treinador_1.pop(pokemon_contra)
+                pokemons_treinador_1.remove(pokemon_contra)
                 if len(pokemons_treinador_1) > 0:
                     pokemon_contra = pokemons_treinador_1[0]
                 else:
                     print("Parabéns, você venceu a batalha e concluiu o jogo!!!")
                     exit()
             print(media_pokemons)
-        
-        
